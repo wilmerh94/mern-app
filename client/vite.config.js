@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
- plugins: [react()],
- esbuild: {
-  jsxFactory: 'h',
-  jsxFragment: 'Fragment',
+ server: {
+  proxy: {
+   '/': 'http://localhost:3000/',
+  },
  },
+ plugins: [react()],
 });
