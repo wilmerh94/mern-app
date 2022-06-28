@@ -19,14 +19,3 @@ The react app uses /api/v1 as base url and the server base endpoint url is /api/
 
 Using /api/v1 as base url is arbitrary. Notice however that it appears in 3 places : client/vite.config.js , on the client side source files and on the server side source files
 
-app.get('/', async (req, res) => {
-try {
-let html = fs.readFileSync(path.resolve(root, 'index.html'), 'utf-8');
-// Transform HTML using Vite plugins.
-html = await viteServer.transformIndexHtml(req.url, html);
-res.send(html);
-} catch (e) {
-return next(e);
-}
-// res.status(200).json({ message: 'Welcome to Support!' });
-});
