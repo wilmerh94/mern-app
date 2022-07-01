@@ -7,10 +7,11 @@ import { Register } from './pages/Register'
 import { Header } from './components/Header'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-function App () {
-  const [count, setCount] = useState(0)
-  const urlWithProxy = '/'
+import { NewTicket } from './pages/NewTicket'
+import { PrivateRoute } from './components/PrivateRoute'
+import { Tickets } from './pages/Tickets'
 
+function App () {
   return (
     <>
       <Router>
@@ -20,6 +21,12 @@ function App () {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
+            <Route path='/new-ticket' element={<PrivateRoute />}>
+              <Route path='/new-ticket' element={<NewTicket />} />
+            </Route>
+            <Route path='/tickets' element={<PrivateRoute />}>
+              <Route path='/tickets' element={<Tickets />} />
+            </Route>
           </Routes>
         </div>
       </Router>
