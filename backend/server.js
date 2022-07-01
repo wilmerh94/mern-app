@@ -1,47 +1,38 @@
-const fs = require('fs');
 const path = require('path');
-
 const express = require('express');
 const colors = require('colors');
-const errorHandler = require('./middleware/errorMiddleware');
+const dotenv = require('dotenv').config();
+const { errorHandler } = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
-const { createServer: createViteServer } = require('vite');
+const PORT = process.env.PORT || 5000;
 
-const dotenv = require('dotenv').config(); //Adding dotenv package to be able to read all the variables im adding to the config .env file
-const PORT = process.env.PORT || 5000; // Adding the port number if the server can't connect to the env port it will try to do it with 5000
-// Adding the port number if the server can't connect to the env port it will try to do it with 5000
-
-// Connect to Database
+// Connect to database
 connectDB();
 
-async function createServer() {
- const app = express();
- const vite = await createViteServer({
-  server: { middlewareMode: 'ssr' },
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+// Routes
+app.use('/api/users/', require('./routes/userRoutes'));
+// app.use('/api/tickets', require('./routes/ticketRoutes'));
+
+// Serve Frontend
+if (process.env.NODE_ENV === 'production') {
+ // Set build folder as static
+ app.use(express.static(path.join(__dirname, '../client')));
+
+ // FIX: below code fixes app crashing on refresh in deployment
+ app.get('*', (_, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html'));
  });
- // Adding this i can get data from the body
-
- app.use(express.json());
- app.use(express.urlencoded({ extended: false }));
-
- // Adding route to the main
- app.get('/', async (req, res, next) => {
-  try {
-   let html = fs.readFileSync(path.resolve(root, 'index.html'), 'utf-8');
-
-   // Transform HTML using Vite plugins.
-   html = await viteServer.transformIndexHtml(req.url, html);
-
-   res.send(html);
-  } catch (e) {
-   return next(e);
-  }
+} else {
+ app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to the Support Desk API' });
  });
- //Routes
- app.use('/api/users', require('./routes/userRoutes'));
-
- // Adding Middleware
- app.use(errorHandler);
-
- app.listen(PORT, () => console.log(`start listening on port : ${PORT}`));
 }
+
+app.use(errorHandler);
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

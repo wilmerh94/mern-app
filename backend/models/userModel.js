@@ -1,9 +1,11 @@
-//Creating the Schema of what I need from the user with mongoose
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema(
  {
-  name: { type: String, required: [true, 'Please add a name'] },
+  name: {
+   type: String,
+   required: [true, 'Please add a name'],
+  },
   email: {
    type: String,
    required: [true, 'Please add an email'],
@@ -13,9 +15,15 @@ const userSchema = mongoose.Schema(
    type: String,
    required: [true, 'Please add a password'],
   },
-  isAdmin: { type: Boolean, required: true, default: false },
+  isAdmin: {
+   type: Boolean,
+   required: true,
+   default: false,
+  },
  },
- { timestamps: true },
+ {
+  timestamps: true,
+ },
 );
 
 module.exports = mongoose.model('User', userSchema);

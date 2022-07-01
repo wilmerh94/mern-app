@@ -4,29 +4,21 @@ I create a root folder with a package.json to use concurrently. With this I can 
 Second foLder the backend server with Express server
 
 Add the following to client/vite.config.js
-Here /api/v1 is mapped to <http://localhost:3000/> which is where the server resides
+Here /api/use is mapped to <http://localhost:3000/> which is where the server resides, **Make sure when you're using vite with express and node the port for vite app has to be different than the one on the server side(backends)**
 
 ```js
-server: {
-    proxy: {
-      "/api/v1": "http://localhost:5000/",
-    },
+ server: {
+  port: '4000',
+  proxy: {
+   '/api/users/': {
+    target: `http://localhost:3000`,
+    changeOrigin: true,
+   },
   },
+ },
 
 ```
 
-The react app uses /api/v1 as base url and the server base endpoint url is /api/v1
+The react app uses /api/user as base url and the server base endpoint url is /api/user
 
-Using /api/v1 as base url is arbitrary. Notice however that it appears in 3 places : client/vite.config.js , on the client side source files and on the server side source files
-
-app.get('/', async (req, res) => {
-try {
-let html = fs.readFileSync(path.resolve(root, 'index.html'), 'utf-8');
-// Transform HTML using Vite plugins.
-html = await viteServer.transformIndexHtml(req.url, html);
-res.send(html);
-} catch (e) {
-return next(e);
-}
-// res.status(200).json({ message: 'Welcome to Support!' });
-});
+Using /api/user as base url is arbitrary. Notice however that it appears in 3 places : client/vite.config.js , on the client side source files and on the server side source files
