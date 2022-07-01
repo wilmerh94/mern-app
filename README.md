@@ -21,4 +21,9 @@ Here /api/use is mapped to <http://localhost:3000/> which is where the server re
 
 The react app uses /api/user as base url and the server base endpoint url is /api/user
 
+<<<<<<< HEAD
 Using /api/user as base url is arbitrary. Notice however that it appears in 3 places : client/vite.config.js , on the client side source files and on the server side source files
+=======
+Using /api/v1 as base url is arbitrary. Notice however that it appears in 3 places : client/vite.config.js , on the client side source files and on the server side source files
+
+>>>>>>> e468fac7bc9c9fa69fe6dd75d485b395f6143c72
