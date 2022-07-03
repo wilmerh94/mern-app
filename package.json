@@ -1,10 +1,11 @@
 {
-  "dependencies": {
-    "concurrently": "^7.0.0",
-    "express-async-handler": "^1.2.0"
-  },
-  "scripts": {
-    "start": "concurrently \"cd ./backend && pnpm run server\" \"cd ./client && pnpm run dev\"",
-    "install": "concurrently \"cd ./backend && pnpm i\" \"cd ./client && pnpm i\""
-  }
+ "dependencies": {
+  "concurrently": "^7.0.0",
+  "express-async-handler": "^1.2.0"
+ },
+ "scripts": {
+  "start": "concurrently \"cd ./backend && pnpm run server\" \"cd ./client && pnpm run dev\"",
+  "install": "concurrently \"cd ./backend && pnpm i\" \"cd ./client && pnpm i\"",
+  "heroku-postbbuild": "NPM_CONFIG_PRODUCTION=false pnpm i --prefix client && pnpm run build --prefix client"
+ }
 }
