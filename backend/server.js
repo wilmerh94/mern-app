@@ -22,11 +22,11 @@ app.use('api/tickets/:ticketId/notes', require('./routes/noteRoutes'));
 // Serve Frontend
 if (process.env.NODE_ENV === 'production') {
  // Set build folder as static
- app.use(express.static(path.join('../client/build')));
+ app.use(express.static(path.join(__dirname, '../client/build')));
 
  // FIX: below code fixes app crashing on refresh in deployment
  app.get('*', (req, res) => {
-  res.sendFile(path.resolve('../client/build/index.html'));
+  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
  });
 } else {
  app.get('/', (req, res) => {
