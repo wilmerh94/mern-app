@@ -4,6 +4,7 @@
   "express-async-handler": "^1.2.0"
  },
  "scripts": {
+  "install": "concurrently \"cd ./backend && npm i\" \"cd ./client && npm i\"",
   "start": "concurrently \"cd ./backend && npm run server\" \"cd ./client && npm run dev\"",
   "heroku-postbbuild": "NPM_CONFIG_PRODUCTION=false npm i client && npm run build client"
  }
