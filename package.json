@@ -5,7 +5,6 @@
  },
  "scripts": {
   "start": "concurrently \"cd ./backend && pnpm run server\" \"cd ./client && pnpm run dev\"",
-  "install": "concurrently \"cd ./backend && pnpm i\" \"cd ./client && pnpm i\"",
-  "heroku-postbbuild": "NPM_CONFIG_PRODUCTION=false pnpm i --prefix client && pnpm run build --prefix client"
+  "heroku-postbbuild": "NPM_CONFIG_PRODUCTION=false pnpm i client && pnpm run build client"
  }
 }
